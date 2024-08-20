@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор мест</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .bus-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 2px solid #4CAF50; /* Зеленая граница */
+            padding: 20px;
+            border-radius: 8px; /* Скругление углов */
+            background-color: #fff;
+            max-width: 600px;
+            margin: 20px auto; /* Центрирование контейнера */
+        }
+
+        .seats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Сетка из 4 столбцов */
+            grid-gap: 10px; /* Отступы между элементами */
+        }
+
+        .seat {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .free {
+            background-color: #4CAF50; /* Зеленый */
+        }
+
+        .reserved {
+            background-color: #FF5733; /* Красный */
+        }
+
+        .selected {
+            background-color: #FFC107; /* Желтый */
+        }
+
+        .form-container {
+            border: 2px solid #4CAF50; /* Зеленая граница */
+            padding: 20px;
+            border-radius: 8px; /* Скругление углов */
+            background-color: #fff;
+            max-width: 400px;
+            margin: 20px auto; /* Центрирование контейнера */
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Выбор мест в автобусе {{ bus.number }}</h1>
+
+    <!-- Контейнер для автобуса -->
+    <div class="bus-container">
+        <div class="seats-container" id="seats">
+            {% for seat in seats %}
+                <div class="seat {% if seat.is_reserved %}reserved{% else %}free{% endif %}" 
+                     data-seat-id="{{ seat.id }}">
+                    {{ seat.seat_number }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Контейнер для формы бронирования -->
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="seat" id="selected-seat" value="">
+            <input type="text" name="full_name" placeholder="ФИО" required>
+            <input type="text" name="phone_number" placeholder="Номер телефона" required>
+            <input type="email" name="email" placeholder="Электронная почта" required>
+            <button type="submit">Забронировать</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.seat.free').forEach(function(seat) {
+            seat.addEventListener('click', function() {
+                document.querySelectorAll('.seat').forEach(function(s) {
+                    s.classList.remove('selected');
+                });
+                seat.classList.add('selected');
+                document.getElementById('selected-seat').value = seat.getAttribute('data-seat-id');
+            });
+        });
+    </script>
+</body>
+</html>

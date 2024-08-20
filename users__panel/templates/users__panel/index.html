@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jool.kz</title>
+    <style>
+        /* Стили для header */
+        header {
+            background-color: #4CAF50; /* Зеленый цвет фона */
+            padding: 10px 20px; /* Отступы */
+            color: white; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Стили для навигации */
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            color: white; /* Цвет ссылок */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+
+        /* Контейнер для полей ввода */
+        .search-container {
+            border: 2px solid #4CAF50; /* Зеленая граница */
+            padding: 20px;
+            border-radius: 8px; /* Скругление углов */
+            max-width: 400px; /* Максимальная ширина контейнера */
+            margin: 20px auto; /* Выравнивание по центру */
+        }
+
+        /* Стили для полей ввода */
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc; /* Цвет границы */
+            border-radius: 4px; /* Скругление углов */
+            box-sizing: border-box;
+        }
+
+        /* Стили для кнопки */
+        button {
+            width: 100%;
+            background-color: #4CAF50; /* Зеленый цвет фона */
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Стили для заголовков и списка */
+        h2 {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        /* Контейнер для результатов поиска */
+        .results-container {
+            border: 2px solid #4CAF50; /* Зеленая граница */
+            padding: 20px;
+            border-radius: 8px; /* Скругление углов */
+            max-width: 600px; /* Максимальная ширина контейнера */
+            margin: 20px auto; /* Выравнивание по центру */
+            background-color: #fff; /* Белый фон */
+        }
+
+        .results-container h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Jool.kz</h1>
+        <nav>
+            <ul>
+                {% if not user.is_authenticated %}
+                <li>
+                    <a href="{% url 'login' %}">Войти</a>
+                </li>
+                <li>
+                    <a href="{% url 'admin__panel:admin_login' %}">Admin</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'logout' %}">Выйти</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    
+    <div class="search-container">
+        <form method="GET" action="{% url 'search_buses' %}">
+            <label for="from">Откуда:</label>
+            <input type="text" id="from" name="from" required>
+            <br>
+            <label for="to">Куда:</label>
+            <input type="text" id="to" name="to" required>
+            <br>
+            <label for="departure_date">Дата отправления:</label>
+            <input type="date" id="departure_date" name="departure_date">
+            <br>
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+
+    <!-- Контейнер для результатов поиска -->
+    {% if message %}
+    <div class="results-container">
+        <p>{{ message }}</p>
+    </div>
+    {% elif buses %}
+    <div class="results-container">
+        <h3>Результаты поиска:</h3>
+        <ul>
+            {% for bus in buses %}
+            <li>
+                Откуда: {{ bus.from_location }}, Куда: {{ bus.to_location }}, Дата отправления: {{ bus.departure_date }} -
+                <a href="{% url 'bus_detail' bus.id %}">Выбрать места</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+</body>
+</html>

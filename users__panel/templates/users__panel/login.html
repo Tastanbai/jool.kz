@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        /* Стили для контейнера формы */
+        .form-container {
+            border: 2px solid #4CAF50; /* Зеленая граница */
+            padding: 20px;
+            width: 100%;
+            max-width: 400px; /* Максимальная ширина контейнера */
+            border-radius: 8px; /* Скругленные углы */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        /* Заголовок формы */
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для полей ввода */
+        .form-container input[type="text"], .form-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc; /* Цвет границы */
+            border-radius: 4px; /* Скругление углов */
+            box-sizing: border-box;
+        }
+
+        /* Стили для кнопки */
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50; /* Зеленый цвет фона */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Ссылки */
+        .form-container a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 10px;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Login</h2>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+</body>
+</html>

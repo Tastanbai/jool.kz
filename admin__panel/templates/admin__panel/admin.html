@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Панель Администратора</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50; /* Зеленый цвет фона */
+            padding: 10px 20px; /* Отступы */
+            color: white; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            color: white; /* Цвет ссылок */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header nav ul li a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .add-bus-container, .buses-list-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 2px solid #4CAF50; /* Зеленая граница */
+            border-radius: 8px; /* Скругление углов */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-bus-container h3, .buses-list-container h3 {
+            margin-top: 0;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="decimal"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc; /* Цвет границы */
+            border-radius: 4px; /* Скругление углов */
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50; /* Зеленый цвет фона */
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        @media (max-width: 768px) {
+            .add-bus-container, .buses-list-container {
+                padding: 10px;
+            }
+
+            input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="decimal"] {
+                padding: 8px;
+            }
+
+            button {
+                padding: 8px;
+            }
+
+            table, th, td {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Панель Администратора</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'admin__panel:admin_logout' %}">Выйти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Добро пожаловать в Панель Администратора</h2>
+
+        <div class="add-bus-container">
+            <h3>Добавить новый автобус</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="id_number">Номер автобуса:</label>
+                    <input type="text" id="id_number" name="number" required>
+                </div>
+                <div>
+                    <label for="id_from_location">Откуда:</label>
+                    <input type="text" id="id_from_location" name="from_location" required>
+                </div>
+                <div>
+                    <label for="id_to_location">Куда:</label>
+                    <input type="text" id="id_to_location" name="to_location" required>
+                </div>
+                <div>
+                    <label for="id_departure_date">Дата отправления:</label>
+                    <input type="date" id="id_departure_date" name="departure_date" required>
+                </div>
+                <div>
+                    <label for="id_departure_time">Время отправления:</label>
+                    <input type="time" id="id_departure_time" name="departure_time" required>
+                </div>
+                <div>
+                    <label for="id_seats">Места:</label>
+                    <input type="number" id="id_seats" name="seats" required>
+                </div>
+                <div>
+                    <label for="id_price">Цена:</label>
+                    <input type="decimal" id="id_price" name="price" required>
+                </div>
+                <button type="submit">Добавить автобус</button>
+            </form>
+        </div>
+        
+
+        <div class="buses-list-container">
+            <h3>Существующие автобусы</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Номер Автобуса</th>
+                        <th>Откуда</th>
+                        <th>Куда</th>
+                        <th>Дата отправления</th>
+                        <th>Время отправления</th>
+                        <th>Места</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bus in buses %}
+                        <tr>
+                            <td>{{ bus.number }}</td>
+                            <td>{{ bus.from_location }}</td>
+                            <td>{{ bus.to_location }}</td>
+                            <td>{{ bus.departure_date }}</td>
+                            <td>{{ bus.departure_time }}</td>
+                            <td>{{ bus.seats }}</td>
+                            <td>{{ bus.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
