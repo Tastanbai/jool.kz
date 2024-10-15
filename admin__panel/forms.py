@@ -24,7 +24,7 @@ class BusForm(forms.ModelForm):
 
     class Meta:
         model = Bus
-        fields = ['number', 'from_location', 'to_location', 'departure_date', 'departure_time', 'seats', 'price']
+        fields = ['number', 'from_location', 'to_location', 'departure_date', 'departure_time', 'seats', 'price',  'bus_type']
 
         from django import forms
 from .models import Seat

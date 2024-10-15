@@ -38,6 +38,7 @@ def search_buses(request):
     from_location = request.GET.get('from')
     to_location = request.GET.get('to')
     departure_date = request.GET.get('departure_date')
+    bus_type = request.GET.get('bus_type')
 
     # Изначально фильтруем все автобусы
     buses = Bus.objects.all()
@@ -145,3 +146,5 @@ def kaspi_payment(request):
         }
     
     return JsonResponse(response_data)
+
+

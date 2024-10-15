@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='admin_logout'),
     path('register/', views.register, name='admin_register'),
     path('', views.admin_index, name='admin_index'),
+    path('get_passengers/<int:bus_id>/', views.get_passengers, name='get_passengers'),
 ]
