@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,28 +88,28 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>Register</h2>
+        <h2>Регистрация</h2>
         <form method="post">
             {% csrf_token %}
             <p>
-                <label for="{{ form.username.id_for_label }}">Username:</label>
+                <label for="{{ form.username.id_for_label }}">Имя пользователя:</label>
                 {{ form.username }}
             </p>
             <p>
-                <label for="{{ form.email.id_for_label }}">Email address:</label>
+                <label for="{{ form.email.id_for_label }}">Электронная почта:</label>
                 {{ form.email }}
             </p>
             <p>
-                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                <label for="{{ form.password1.id_for_label }}">Пароль:</label>
                 {{ form.password1 }}
             </p>
             <p>
-                <label for="{{ form.password2.id_for_label }}">Password confirmation:</label>
+                <label for="{{ form.password2.id_for_label }}">Подтверждение пароля:</label>
                 {{ form.password2 }}
             </p>
-            <button type="submit">Register</button>
+            <button type="submit">Зарегистрироваться</button>
         </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти здесь</a></p>
     </div>
 </body>
 </html>
