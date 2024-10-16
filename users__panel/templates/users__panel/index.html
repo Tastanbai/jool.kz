@@ -379,30 +379,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-<script>
-    $(function() {
-        // Проверяем, поддерживается ли input[type="date"]
-        var isDateSupported = function() {
-            var input = document.createElement('input');
-            input.setAttribute('type', 'date');
-            var notADateValue = 'not-a-date';
-            input.setAttribute('value', notADateValue);
-            return (input.value !== notADateValue);
-        };
-
-        if (!isDateSupported()) {
-            // Если поле ввода даты не поддерживается, инициализируем jQuery UI Datepicker
-            $("#departure_date").datepicker({
-                dateFormat: 'dd.mm.yy'
-            });
-        }
-    });
-</script>
-
-
+  
     <script>
         $(function() {
             var availableCities = [
@@ -435,7 +412,7 @@
         <form method="GET" action="{% url 'search_buses' %}">
             <input type="text" id="from" name="from" placeholder="Откуда" required>
             <input type="text" id="to" name="to" placeholder="Куда" required>
-            <input type="date" id="departure_date" name="departure_date">
+            <input type="date" id="departure_date" name="departure_date" placeholder="дд.мм.гггг">
             
             <!-- <select id="bus_type" name="bus_type">
                 <option value="">Выберите тип</option>
