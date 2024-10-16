@@ -399,38 +399,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     
-    <script>
-        $(function() {
-            // Проверка на поддержку input[type="date"]
-            var isDateInputSupported = function() {
-                var input = document.createElement('input');
-                input.setAttribute('type', 'date');
-                var notADateValue = 'not-a-date';
-                input.setAttribute('value', notADateValue);
-                return (input.value !== notADateValue);
-            };
-    
-            if (!isDateInputSupported()) {
-                // Используем jQuery UI Datepicker, если поле даты не поддерживается
-                $('#departure_date').datepicker({
-                    dateFormat: 'dd.mm.yy'
-                });
-            }
-        });
-    </script>
-    
-    <script>
-        $(function() {
-            var availableCities = [
-                "Алматы", "Астана", "Шымкент", "Караганда", "Актобе", "Ақтау", "Атырау", "Уральск",
-                "Тараз", "Павлодар", "Усть-Каменогорск", "Семей", "Кызылорда", "Қостанай", "Көкшетау",
-            ];
-            
-            $("#from, #to").autocomplete({
-                source: availableCities
-            });
-        });
-    </script>
 </head>
 <body>
     <header>
@@ -487,5 +455,40 @@
         </div>
         {% endif %}
     </div>
+
+
+
+    <script>
+        $(function() {
+            // Проверка на поддержку input[type="date"]
+            var isDateInputSupported = function() {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'date');
+                var notADateValue = 'not-a-date';
+                input.setAttribute('value', notADateValue);
+                return (input.value !== notADateValue);
+            };
+
+            if (!isDateInputSupported()) {
+                // Используем jQuery UI Datepicker, если поле даты не поддерживается
+                $('#departure_date').datepicker({
+                    dateFormat: 'dd.mm.yy'
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(function() {
+            var availableCities = [
+                "Алматы", "Астана", "Шымкент", "Караганда", "Актобе", "Ақтау", "Атырау", "Уральск",
+                "Тараз", "Павлодар", "Усть-Каменогорск", "Семей", "Кызылорда", "Қостанай", "Көкшетау",
+            ];
+            
+            $("#from, #to").autocomplete({
+                source: availableCities
+            });
+        });
+    </script>
 </body>
 </html>
