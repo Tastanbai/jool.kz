@@ -1,4 +1,4 @@
-{% comment %} <!DOCTYPE html>
+<!-- {% comment %} <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -102,8 +102,8 @@
         }
     </style>
 
-    <!-- Подключение jQuery и jQuery UI для автозаполнения -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    Подключение jQuery и jQuery UI для автозаполнения -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -187,7 +187,7 @@
 
 
 </body>
-</html> {% endcomment %}
+</html> {% endcomment %} -->
 
 
 <!DOCTYPE html>
@@ -219,8 +219,6 @@
             margin: 0;
             margin-top: 6px;
             font-size: 30px;
-            text-content: center; 
-
             @media screen and (max-width: 768px) {
                 header h1 {
                     font-size: 45px; /* Уменьшенный размер шрифта для мобильных устройств */
@@ -415,8 +413,13 @@
             <input type="text" id="from" name="from" placeholder="Откуда" required>
             <input type="text" id="to" name="to" placeholder="Куда" required>
             <input type="date" id="departure_date" name="departure_date">
-            <select id="bus_type" name="bus_type">
-                <option value="">Любой тип</option>
+            <!-- <select id="bus_type" name="bus_type">
+                <option value="">Выберите тип</option>
+                <option value="sitting">Сидящий</option>
+                <option value="sleeping">Спящий</option>
+            </select> -->
+            <select id="bus_type" name="bus_type" required>
+                <option value="" disabled selected hidden>Выберите тип</option>
                 <option value="sitting">Сидящий</option>
                 <option value="sleeping">Спящий</option>
             </select>

@@ -17,7 +17,7 @@
 
         /* Стили для контейнера формы */
         .form-container {
-            border: 2px solid #4CAF50; /* Зеленая граница */
+            border: 2px solid #3498db; /* Зеленая граница */
             padding: 20px;
             width: 100%;
             max-width: 400px; /* Максимальная ширина контейнера */
@@ -48,7 +48,7 @@
         .form-container button {
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50; /* Зеленый цвет фона */
+            background-color: #3498db; /* Зеленый цвет фона */
             color: white;
             border: none;
             border-radius: 4px;
@@ -62,7 +62,7 @@
 
         /* Ссылки */
         .form-container a {
-            color: #4CAF50;
+            color: #3498db;
             text-decoration: none;
             font-weight: bold;
         }
@@ -84,7 +84,7 @@
     <div class="form-container">
         <h2>Login</h2>
         {% if error %}
-        <p style="color: red;">{{ error }}</p>
+        <p style="color: blue;">{{ error }}</p>
         {% endif %}
         <form method="post">
             {% csrf_token %}

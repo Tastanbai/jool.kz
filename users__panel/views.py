@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from admin__panel.models import Bus, Seat
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, SeatSelectionForm
+from django.utils.timezone import now
+
 
 def register(request):
     if request.method == 'POST':
@@ -41,7 +43,8 @@ def search_buses(request):
     bus_type = request.GET.get('bus_type')
 
     # Изначально фильтруем все автобусы
-    buses = Bus.objects.all()
+    today = now().date()
+    buses = Bus.objects.filter(departure_date__gte=today)
 
     # Фильтрация по каждому критерию, если он был введен
     if from_location:
