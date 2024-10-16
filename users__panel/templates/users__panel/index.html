@@ -412,7 +412,8 @@
         <form method="GET" action="{% url 'search_buses' %}">
             <input type="text" id="from" name="from" placeholder="Откуда" required>
             <input type="text" id="to" name="to" placeholder="Куда" required>
-            <input type="date" id="departure_date" name="departure_date">
+            <input type="text" id="departure_date" name="departure_date" placeholder="дд.мм.гггг" pattern="\d{2}.\d{2}.\d{4}">
+
             <!-- <select id="bus_type" name="bus_type">
                 <option value="">Выберите тип</option>
                 <option value="sitting">Сидящий</option>
