@@ -326,6 +326,22 @@
             padding: 1rem;
             margin-bottom: 1rem;
         }
+        input[type="date"] {
+        background-color: white;
+        color: #333;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+
+        @media screen and (max-width: 768px) {
+            input[type="date"] {
+                font-size: 16px;
+                padding: 8px;
+            }
+        }
+
 
         .results-container a {
             display: inline-block;
@@ -379,7 +395,30 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    
+    <script>
+        $(function() {
+            // Проверка на поддержку input[type="date"]
+            var isDateInputSupported = function() {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'date');
+                var notADateValue = 'not-a-date';
+                input.setAttribute('value', notADateValue);
+                return (input.value !== notADateValue);
+            };
+    
+            if (!isDateInputSupported()) {
+                // Используем jQuery UI Datepicker, если поле даты не поддерживается
+                $('#departure_date').datepicker({
+                    dateFormat: 'dd.mm.yy'
+                });
+            }
+        });
+    </script>
+    
     <script>
         $(function() {
             var availableCities = [
