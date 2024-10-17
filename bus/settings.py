@@ -27,7 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['91.243.71.46', 'jool.kz']
 
-
 # Application definition
 
 INSTALLED_APPS = [
