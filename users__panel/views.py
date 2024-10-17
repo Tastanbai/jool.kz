@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from admin__panel.models import Bus, Seat
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, SeatSelectionForm
 from django.utils.timezone import now
+from datetime import datetime
+from django.http import HttpResponseBadRequest
 
 
 def register(request):
@@ -45,6 +47,13 @@ def search_buses(request):
     # Изначально фильтруем все автобусы
     today = now().date()
     buses = Bus.objects.filter(departure_date__gte=today)
+
+    if departure_date:
+        try:
+            departure_date = datetime.strptime(departure_date, '%d.%m.%Y').strftime('%Y-%m-%d')
+        except ValueError:
+            return HttpResponseBadRequest("Неверный формат даты. Ожидается формат дд.мм.гггг")
+
 
     # Фильтрация по каждому критерию, если он был введен
     if from_location:
