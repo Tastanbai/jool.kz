@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Admin Login</title>
+    <meta charset="UTF-8">
+    <title>Вход</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,13 +15,14 @@
         }
 
         .form-container {
-            border: 2px solid #ccc;
+            border: 2px solid #3498db;
             padding: 20px;
             width: 100%;
             max-width: 400px;
-            border-radius: 5px;
+            border-radius: 8px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
 
         .form-container h2 {
@@ -29,27 +31,24 @@
             margin-bottom: 20px;
         }
 
-        .form-container p {
-            color: #333;
-        }
-
-        .form-container input {
+        .form-container input[type="text"], .form-container input[type="password"] {
             width: 100%;
             padding: 10px;
-            margin: 5px 0 15px 0;
+            margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 3px;
+            border-radius: 4px;
             box-sizing: border-box;
         }
 
         .form-container button {
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 4px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         .form-container button:hover {
@@ -57,8 +56,9 @@
         }
 
         .form-container a {
-            color: #4CAF50;
+            color: #3498db;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .form-container a:hover {
@@ -67,30 +67,25 @@
 
         @media (max-width: 480px) {
             .form-container {
+                padding: 10px;
                 width: 100%;
                 max-width: 100%;
-                padding: 10px;
-                box-sizing: border-box;
-            }
-
-            .form-container h2 {
-                font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Login</h2>
+        <h2>Вход</h2>
         {% if error_message %}
         <p style="color: red;">{{ error_message }}</p>
         {% endif %}
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Login</button>
+            <button type="submit">Войти</button>
         </form>
-        <p>Don't have an account? <a href="{% url 'admin__panel:admin_register' %}">Register here</a></p>
+        <p>Нет аккаунта? <a href="{% url 'admin__panel:admin_register' %}">Зарегистрируйтесь здесь</a></p>
     </div>
 </body>
 </html>

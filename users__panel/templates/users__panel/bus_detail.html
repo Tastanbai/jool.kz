@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -21,18 +21,18 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
-            border: 2px solid #3498db; /* Зеленая граница */
+            border: 2px solid #3498db; 
             padding: 20px;
-            border-radius: 8px; /* Скругление углов */
+            border-radius: 8px; 
             background-color: #fff;
             max-width: 600px;
-            margin: 20px auto; /* Центрирование контейнера */
+            margin: 20px auto; 
         }
 
         .seats-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Сетка из 4 столбцов */
-            grid-gap: 10px; /* Отступы между элементами */
+            grid-template-columns: repeat(4, 1fr); 
+            grid-gap: 10px; 
         }
 
         .seat {
@@ -47,24 +47,253 @@
         }
 
         .free {
-            background-color: #3498db; /* Зеленый */
+            background-color: #3498db;
         }
 
         .reserved {
-            background-color: red; /* Красный */
+            background-color: red;
         }
 
         .selected {
-            background-color: black; /* Желтый */
+            background-color: black; 
         }
 
         .form-container {
-            border: 2px solid #3498db; /* Зеленая граница */
+            border: 2px solid #3498db; 
             padding: 20px;
-            border-radius: 8px; /* Скругление углов */
+            border-radius: 8px; 
             background-color: #fff;
             max-width: 400px;
-            margin: 20px auto; /* Центрирование контейнера */
+            margin: 20px auto; 
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Выбор мест в автобусе {{ bus.number }}</h1>
+
+   
+    <div class="bus-container">
+        <div class="seats-container" id="seats">
+            {% for seat in seats %}
+                <div class="seat {% if seat.is_reserved %}reserved{% else %}free{% endif %}" 
+                     data-seat-id="{{ seat.id }}">
+                    {{ seat.seat_number }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="seat" id="selected-seat" value="">
+            <input type="text" name="full_name" placeholder="ФИО" required>
+            <input type="text" name="phone_number" placeholder="Номер телефона" required>
+            <input type="email" name="email" placeholder="Электронная почта" required>
+            <button type="submit">Забронировать</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.seat.free').forEach(function(seat) {
+            seat.addEventListener('click', function() {
+                document.querySelectorAll('.seat').forEach(function(s) {
+                    s.classList.remove('selected');
+                });
+                seat.classList.add('selected');
+                document.getElementById('selected-seat').value = seat.getAttribute('data-seat-id');
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор мест</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Основной контейнер для автобуса */
+        .bus-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+            border: 2px solid #3498db;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #fff;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        /* Сетка для сидений */
+        .seats-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* Шесть колонок в сетке */
+            grid-gap: 20px; /* Расстояние между сидениями */
+            margin-top: 20px;
+        }
+
+        /* Стили для стульев */
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #7FC8A9;
+            border-radius: 15px 15px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        /* Подлокотники */
+        .seat::before,
+        .seat::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 25px;
+            background-color: #7FC8A9;
+            border-radius: 5px;
+            top: 10px;
+        }
+
+        .seat::before {
+            left: -15px;
+        }
+
+        .seat::after {
+            right: -15px;
+        }
+
+        /* Спинка стула */
+        .seat-back {
+            width: 50px;
+            height: 10px;
+            background-color: #7FC8A9;
+            border-radius: 10px;
+            position: absolute;
+            top: -15px;
+            left: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Цвета для типов мест */
+        .seat.free {
+            background-color: #2ecc71; /* Зеленый цвет для свободных мест */
+        }
+
+        .seat.busy {
+            background-color: #B0B3C6; /* Серый цвет для занятых мест */
+        }
+
+        .seat.vip {
+            background-color: #FFAD60; /* Оранжевый для VIP */
+        }
+
+        .seat.selected {
+            background-color: black; /* Черный цвет для выбранного места */
+            color: white;
+        }
+
+        /* Стили для состояния стула */
+        .seat-number {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Легенда для цветов */
+        .legend {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .legend-color.free {
+            background-color: #2ecc71;
+        }
+
+        .legend-color.busy {
+            background-color: #B0B3C6;
+        }
+
+        .legend-color.vip {
+            background-color: #FFAD60;
+        }
+        
+        .legend-color.selected {
+            background-color: black;
+        }
+
+        /* Стили для формы */
+        .form-container {
+            border: 2px solid #3498db;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            max-width: 400px;
+            margin: 20px auto;
         }
 
         input[type="text"], input[type="email"] {
@@ -100,11 +329,28 @@
     <div class="bus-container">
         <div class="seats-container" id="seats">
             {% for seat in seats %}
-                <div class="seat {% if seat.is_reserved %}reserved{% else %}free{% endif %}" 
+                <div class="seat {% if seat.is_reserved %}busy{% else %}free{% endif %}" 
                      data-seat-id="{{ seat.id }}">
-                    {{ seat.seat_number }}
+                    <div class="seat-back"></div>
+                    <div class="seat-number">{{ seat.seat_number }}</div>
                 </div>
             {% endfor %}
+        </div>
+    </div>
+
+    <!-- Легенда цветов -->
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color free"></div> Свободно
+        </div>
+        <div class="legend-item">
+            <div class="legend-color busy"></div> Занято
+        </div>
+        <div class="legend-item">
+            <div class="legend-color vip"></div> VIP
+        </div>
+        <div class="legend-item">
+            <div class="legend-color selected"></div> Выбрано
         </div>
     </div>
 
